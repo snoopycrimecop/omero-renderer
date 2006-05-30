@@ -1,8 +1,8 @@
 <!DOCTYPE suite SYSTEM "http://beust.com/testng/testng-1.0.dtd" >
   
-<suite name="rendering" >
+<suite name="rendering.integration" >
   
-  <test name="rendering.active">
+  <test name="rendering.integration.active">
     <groups>
       <run>
         <exclude name="broken"/>
