@@ -1,2 +1,8 @@
-rootProject.name = "omero-renderer"
+pluginManagement {
+    repositories {
+        mavenLocal()
+        gradlePluginPortal()
+    }
+}
 
+rootProject.name = "omero-renderer"
