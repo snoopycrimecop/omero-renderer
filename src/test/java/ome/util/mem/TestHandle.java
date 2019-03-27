@@ -1,6 +1,4 @@
 /*
- * ome.util.mem.TestHandle
- *
  *   Copyright 2006 University of Dundee. All rights reserved.
  *   Use is subject to license terms supplied in LICENSE.txt
  */
@@ -28,7 +26,7 @@ public class TestHandle extends TestCase {
     private MockBody body; // Mock to play the Body role.
 
     @Override
-    @Configuration(beforeTestMethod = true)
+    @BeforeMethod
     protected void setUp() {
         handle = new SimpleHandle();
         body = handle.getInitialBody();

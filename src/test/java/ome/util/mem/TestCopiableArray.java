@@ -1,6 +1,4 @@
 /*
- * ome.util.mem.TestCopiableArray
- *
  *   Copyright 2006 University of Dundee. All rights reserved.
  *   Use is subject to license terms supplied in LICENSE.txt
  */
@@ -29,7 +27,7 @@ public class TestCopiableArray extends TestCase {
     private MockBody element; // Mock to play the element role.
 
     @Override
-    @Configuration(beforeTestMethod = true)
+    @BeforeMethod
     protected void setUp() {
         copiableArray = new SimpleCopiableArray(SIZE);
         element = new MockBody();
