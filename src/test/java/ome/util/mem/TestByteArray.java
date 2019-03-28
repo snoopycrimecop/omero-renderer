@@ -11,7 +11,7 @@ import java.io.IOException;
 
 import ome.util.tests.common.MockInputStream;
 
-import org.testng.annotations.*;
+import org.testng.annotations.Test;
 
 import junit.framework.TestCase;
 

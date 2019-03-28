@@ -5,7 +5,8 @@
 
 package ome.util.mem;
 
-import org.testng.annotations.*;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Test;
 import junit.framework.TestCase;
 
 /**
