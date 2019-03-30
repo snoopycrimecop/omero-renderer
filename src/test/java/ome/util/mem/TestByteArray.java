@@ -1,6 +1,4 @@
 /*
- * ome.util.mem.TestByteArray
- *
  *   Copyright 2006 University of Dundee. All rights reserved.
  *   Use is subject to license terms supplied in LICENSE.txt
  */
@@ -11,7 +9,7 @@ import java.io.IOException;
 
 import ome.util.tests.common.MockInputStream;
 
-import org.testng.annotations.*;
+import org.testng.annotations.Test;
 
 import junit.framework.TestCase;
 

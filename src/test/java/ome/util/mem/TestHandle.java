@@ -1,13 +1,13 @@
 /*
- * ome.util.mem.TestHandle
- *
  *   Copyright 2006 University of Dundee. All rights reserved.
  *   Use is subject to license terms supplied in LICENSE.txt
  */
 
 package ome.util.mem;
 
-import org.testng.annotations.*;
+
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Test;
 import junit.framework.TestCase;
 
 /**
@@ -28,7 +28,7 @@ public class TestHandle extends TestCase {
     private MockBody body; // Mock to play the Body role.
 
     @Override
-    @Configuration(beforeTestMethod = true)
+    @BeforeMethod
     protected void setUp() {
         handle = new SimpleHandle();
         body = handle.getInitialBody();

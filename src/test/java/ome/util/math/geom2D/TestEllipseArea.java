@@ -1,6 +1,4 @@
 /*
- * ome.util.math.geom2D.TestEllipseArea
- *
  *   Copyright 2006 University of Dundee. All rights reserved.
  *   Use is subject to license terms supplied in LICENSE.txt
  */
@@ -9,7 +7,7 @@ package ome.util.math.geom2D;
 
 import java.awt.Rectangle;
 
-import org.testng.annotations.*;
+import org.testng.annotations.Test;
 
 import junit.framework.TestCase;
 
