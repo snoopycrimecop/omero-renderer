@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/ome/omero-renderer.png)](https://travis-ci.org/ome/omero-renderer)
+
 # omero-renderer
 
 A Gradle project
