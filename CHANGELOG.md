@@ -1,3 +1,8 @@
+5.5.4 (February 2020)
+---------------------
+
+- Bump omero-romio version to 5.5.4.
+
 5.5.3 (December 2019)
 ---------------------
 
