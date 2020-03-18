@@ -1,7 +1,7 @@
 5.5.5 (March 2020)
 ------------------
 
-- Display unit test output instead of caching it
+- Display unit test output instead of caching it.
   ([#11](https://github.com/ome/omero-renderer/pull/11))
 - Bump omero-romio version to 5.5.5.
 
