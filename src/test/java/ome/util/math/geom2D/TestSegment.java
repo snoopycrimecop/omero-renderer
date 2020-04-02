@@ -5,9 +5,8 @@
 
 package ome.util.math.geom2D;
 
+import org.testng.Assert;
 import org.testng.annotations.Test;
-
-import junit.framework.TestCase;
 
 /**
  * Unit test for {@link Segment}.
@@ -19,7 +18,7 @@ import junit.framework.TestCase;
  *         href="mailto:a.falconi@dundee.ac.uk"> a.falconi@dundee.ac.uk</a>
  * @since OME2.2
  */
-public class TestSegment extends TestCase {
+public class TestSegment {
 
     private static final int MAX_ITER = 30000; // Max iterations in a test.
 
@@ -29,7 +28,7 @@ public class TestSegment extends TestCase {
     public void testSegmentBadArgs() {
         try {
             new Segment(1, 1, 1, 1);
-            fail("Shouldn't allow same points.");
+            Assert.fail("Shouldn't allow same points.");
         } catch (IllegalArgumentException iae) {
             // Ok, expected.
         }
@@ -38,8 +37,8 @@ public class TestSegment extends TestCase {
     @Test
     public void testSegment() {
         Segment r = new Segment(0, 0, 1, 1);
-        assertEquals("Shouldn't change the originX1.", 0.0, r.originX1);
-        assertEquals("Shouldn't change the originX2.", 0.0, r.originX2);
+        Assert.assertEquals(0.0, r.originX1, "Shouldn't change the originX1.");
+        Assert.assertEquals(0.0, r.originX2, "Shouldn't change the originX2.");
     }
 
     @Test
@@ -50,7 +49,7 @@ public class TestSegment extends TestCase {
         for (int i = 0; i < INTERVAL; ++i) {
             d = (double) i / INTERVAL;
             p = new PlanePoint(d, 0);
-            assertEquals("Wrong point [i = " + i + "].", p, r.getPoint(d));
+            Assert.assertEquals(p, r.getPoint(d), "Wrong point [i = " + i + "].");
         }
     }
 
@@ -62,7 +61,7 @@ public class TestSegment extends TestCase {
         for (int i = 0; i < INTERVAL; ++i) {
             d = (double) i / INTERVAL;
             p = new PlanePoint(0, d);
-            assertEquals("Wrong point [i = " + i + "].", p, r.getPoint(d));
+            Assert.assertEquals(p, r.getPoint(d), "Wrong point [i = " + i + "].");
         }
     }
 
@@ -74,7 +73,7 @@ public class TestSegment extends TestCase {
         for (int i = 0; i < INTERVAL; ++i) {
             d = (double) i / INTERVAL;
             p = new PlanePoint(d, 1);
-            assertEquals("Wrong point [i = " + i + "].", p, r.getPoint(d));
+            Assert.assertEquals(p, r.getPoint(d), "Wrong point [i = " + i + "].");
         }
     }
 
@@ -86,7 +85,7 @@ public class TestSegment extends TestCase {
         for (int i = 0; i < INTERVAL; ++i) {
             d = (double) i / INTERVAL;
             p = new PlanePoint(1, d);
-            assertEquals("Wrong point [i = " + i + "].", p, r.getPoint(d));
+            Assert.assertEquals(p, r.getPoint(d), "Wrong point [i = " + i + "].");
         }
     }
 
@@ -96,8 +95,8 @@ public class TestSegment extends TestCase {
         double d;
         for (int i = 0; i < INTERVAL; ++i) {
             d = (double) i / INTERVAL;
-            assertTrue("Actually lies on r [i = " + i + "].", r.lies(d, 1));
-            assertFalse("Doesn't lie on r [i = " + i + "].", r.lies(d, 0));
+            Assert.assertTrue(r.lies(d, 1), "Actually lies on r [i = " + i + "].");
+            Assert.assertFalse(r.lies(d, 0), "Doesn't lie on r [i = " + i + "].");
         }
     }
 
@@ -107,8 +106,8 @@ public class TestSegment extends TestCase {
         double d;
         for (int i = 0; i < INTERVAL; ++i) {
             d = (double) i / INTERVAL;
-            assertTrue("Actually lies on r [i = " + i + "].", r.lies(1, d));
-            assertFalse("Doesn't lie on r [i = " + i + "].", r.lies(d, 0));
+            Assert.assertTrue(r.lies(1, d), "Actually lies on r [i = " + i + "].");
+            Assert.assertFalse(r.lies(d, 0), "Doesn't lie on r [i = " + i + "].");
         }
     }
 
@@ -118,8 +117,8 @@ public class TestSegment extends TestCase {
         double d;
         for (int i = 1; i < INTERVAL; ++i) {
             d = (double) i / INTERVAL;
-            assertTrue("Actually lies on r [i = " + i + "].", r.lies(d, d));
-            assertFalse("Doesn't lie on r [i = " + i + "].", r.lies(d, 0));
+            Assert.assertTrue(r.lies(d, d), "Actually lies on r [i = " + i + "].");
+            Assert.assertFalse(r.lies(d, 0), "Doesn't lie on r [i = " + i + "].");
         }
     }
 
@@ -127,13 +126,10 @@ public class TestSegment extends TestCase {
     public void testEquals() {
         PlanePoint o = new PlanePoint(0, 0), p = new PlanePoint(1, 1);
         Segment r = new Segment(0, 0, 1, 1);
-        assertFalse("Should never be equal to null.", r.equals(null));
-        assertFalse("Should never be equal to a different type.", r
-                .equals(new Object()));
-        assertFalse("Should never be equal if different origin.", r
-                .equals(new Line(o, p, p)));
-        assertFalse("Should never be equal if different direction.", r
-                .equals(new Line(p, o)));
+        Assert.assertFalse(r.equals(null), "Should never be equal to null.");
+        Assert.assertFalse(r.equals(new Object()), "Should never be equal to a different type.");
+        Assert.assertFalse(r.equals(new Line(o, p, p)), "Should never be equal if different origin.");
+        Assert.assertFalse(r.equals(new Line(p, o)), "Should never be equal if different direction.");
     }
 
     @Test
@@ -141,8 +137,7 @@ public class TestSegment extends TestCase {
         Segment r = new Segment(500, -30000, 0, 0);
         int h = r.hashCode();
         for (int i = 0; i < MAX_ITER; ++i) {
-            assertEquals("Should return same value across different calls.", h,
-                    r.hashCode());
+            Assert.assertEquals(h, r.hashCode(), "Should return same value across different calls.");
         }
     }
 
@@ -152,8 +147,8 @@ public class TestSegment extends TestCase {
         for (int i = -MAX_ITER / 2; i < MAX_ITER / 2; ++i) {
             r = new Segment(i, -i, i + 1, -i + 1);
             s = new Segment(i, -i, i + 1, -i + 1);
-            assertEquals("Should return same value for equal objects [i = " + i
-                    + "].", r.hashCode(), s.hashCode());
+            Assert.assertEquals(r.hashCode(), s.hashCode(), "Should return same value for equal objects [i = " + i
+                    + "].");
         }
     }
 
