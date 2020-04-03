@@ -9,9 +9,9 @@ import java.io.IOException;
 
 import ome.util.tests.common.MockInputStream;
 
+import org.testng.Assert;
 import org.testng.annotations.Test;
 
-import junit.framework.TestCase;
 
 /**
  * Tests the normal operation of <code>ByteArray</code> and possible
@@ -24,25 +24,25 @@ import junit.framework.TestCase;
  *         href="mailto:a.falconi@dundee.ac.uk"> a.falconi@dundee.ac.uk</a>
  * @since OME2.2
  */
-public class TestByteArray extends TestCase {
+public class TestByteArray {
 
     private void doTestSetBoundaryCases(ByteArray target) {
         byte value = (byte) 25;
         if (target.length == 0) {
             try {
                 target.set(0, value);
-                fail("Shouldn't accept index 0 if length is 0.");
+                Assert.fail("Shouldn't accept index 0 if length is 0.");
             } catch (ArrayIndexOutOfBoundsException aiobe) {
             }
         }
         try {
             target.set(-1, value);
-            fail("Shouldn't accept negative index.");
+            Assert.fail("Shouldn't accept negative index.");
         } catch (ArrayIndexOutOfBoundsException aiobe) {
         }
         try {
             target.set(target.length, value);
-            fail("Shouldn't accept index greater than length-1.");
+            Assert.fail("Shouldn't accept index greater than length-1.");
         } catch (ArrayIndexOutOfBoundsException aiobe) {
         }
     }
@@ -50,7 +50,7 @@ public class TestByteArray extends TestCase {
     private void doTestSetBufferBoundaryCases(ByteArray target) {
         try {
             target.set(0, null); // Null always checked b/f index.
-            fail("Shouldn't accept null.");
+            Assert.fail("Shouldn't accept null.");
         } catch (NullPointerException npe) {
         }
         target.set(0, new byte[] {}); // buf.len == 0 always checked b/f
@@ -60,18 +60,18 @@ public class TestByteArray extends TestCase {
         if (target.length == 0) {
             try {
                 target.set(0, values);
-                fail("Shouldn't accept index 0 if length is 0.");
+                Assert.fail("Shouldn't accept index 0 if length is 0.");
             } catch (ArrayIndexOutOfBoundsException aiobe) {
             }
         }
         try {
             target.set(-1, values);
-            fail("Shouldn't accept negative index.");
+            Assert.fail("Shouldn't accept negative index.");
         } catch (ArrayIndexOutOfBoundsException aiobe) {
         }
         try {
             target.set(target.length, values);
-            fail("Shouldn't accept index greater than length-1.");
+            Assert.fail("Shouldn't accept index greater than length-1.");
         } catch (ArrayIndexOutOfBoundsException aiobe) {
         }
         if (0 < target.length) {
@@ -79,13 +79,12 @@ public class TestByteArray extends TestCase {
             values[0] = (byte) (original + 1);
             try {
                 target.set(target.length - 1, values);
-                fail("Shouldn't accept a buffer that doesn't fit "
+                Assert.fail("Shouldn't accept a buffer that doesn't fit "
                         + "into the slice.");
             } catch (ArrayIndexOutOfBoundsException aiobe) {
                 // Ok, but check that no value has been copied:
-                assertEquals("No value should be copied if the buffer "
-                        + "doesn't fit into the slice.", original, target
-                        .get(target.length - 1));
+                Assert.assertEquals(original, target.get(target.length - 1), "No value should be copied if the buffer "
+                        + "doesn't fit into the slice.");
             }
         }
     }
@@ -95,28 +94,28 @@ public class TestByteArray extends TestCase {
         MockInputStream stream = new MockInputStream();
         try {
             target.set(0, 0, null); // Null always checked b/f int args.
-            fail("Shouldn't accept null.");
+            Assert.fail("Shouldn't accept null.");
         } catch (NullPointerException npe) {
         }
-        assertEquals("Should do nothing and return 0 if maxLength <= 0.", 0,
-                target.set(0, 0, stream));
-        assertEquals("Should do nothing and return 0 if maxLength <= 0.", 0,
-                target.set(0, -1, stream));
+        Assert.assertEquals(0,
+                target.set(0, 0, stream), "Should do nothing and return 0 if maxLength <= 0.");
+        Assert.assertEquals(0,
+                target.set(0, -1, stream), "Should do nothing and return 0 if maxLength <= 0.");
         if (target.length == 0) {
             try {
                 target.set(0, 1, stream);
-                fail("Shouldn't accept index 0 if length is 0.");
+                Assert.fail("Shouldn't accept index 0 if length is 0.");
             } catch (ArrayIndexOutOfBoundsException aiobe) {
             }
         }
         try {
             target.set(-1, 1, stream);
-            fail("Shouldn't accept negative index.");
+            Assert.fail("Shouldn't accept negative index.");
         } catch (ArrayIndexOutOfBoundsException aiobe) {
         }
         try {
             target.set(target.length, 1, stream);
-            fail("Shouldn't accept index greater than length-1.");
+            Assert.fail("Shouldn't accept index greater than length-1.");
         } catch (ArrayIndexOutOfBoundsException aiobe) {
         }
     }
@@ -130,8 +129,8 @@ public class TestByteArray extends TestCase {
         stream.activate();
 
         // Test.
-        assertEquals("Failed to signal end of stream.", -1, target.set(0, 1,
-                stream));
+        Assert.assertEquals(-1, target.set(0, 1,
+                stream), "Failed to signal end of stream.");
 
         // Make sure all expected calls were performed.
         stream.verify();
@@ -145,10 +144,10 @@ public class TestByteArray extends TestCase {
             byte[] values) {
         for (int i = 0; i < values.length; ++i) {
             target.set(i, values[i]);
-            assertEquals("Set wrong value [index = " + i + "].", values[i],
-                    target.get(i));
-            assertEquals("Didn't set value in original base array "
-                    + "[index = " + i + "].", values[i], base[offset + i]);
+            Assert.assertEquals(values[i],
+                    target.get(i), "Set wrong value [index = " + i + "].");
+            Assert.assertEquals(values[i], base[offset + i], "Didn't set value in original base array "
+                    + "[index = " + i + "].");
         }
     }
 
@@ -160,11 +159,9 @@ public class TestByteArray extends TestCase {
             ByteArray target, byte[] values) {
         target.set(index, values);
         for (int i = 0; i < values.length; ++i) {
-            assertEquals("Set wrong value [index = " + i + "].", values[i],
-                    target.get(index + i));
-            assertEquals("Didn't set value in original base array "
-                    + "[index = " + i + "].", values[i], base[offset + index
-                    + i]);
+            Assert.assertEquals(values[i], target.get(index + i), "Set wrong value [index = " + i + "].");
+            Assert.assertEquals(values[i], base[offset + index + i], "Didn't set value in original base array "
+                    + "[index = " + i + "].");
         }
     }
 
@@ -176,10 +173,9 @@ public class TestByteArray extends TestCase {
     private void verifySetStream(byte[] base, int offset, int index,
             ByteArray target, int valuesToCheck) {
         for (int i = 0; i < valuesToCheck; ++i) {
-            assertEquals("Set wrong value [index = " + i + "].", 1, target
-                    .get(index + i));
-            assertEquals("Didn't set value in original base array "
-                    + "[index = " + i + "].", 1, base[offset + index + i]);
+            Assert.assertEquals(1, target.get(index + i), "Set wrong value [index = " + i + "].");
+            Assert.assertEquals(1, base[offset + index + i], "Didn't set value in original base array "
+                    + "[index = " + i + "].");
         }
         // NOTE: expected value is 1 b/c mock read writes 1 into the buffer.
     }
@@ -188,24 +184,24 @@ public class TestByteArray extends TestCase {
     public void testByteArray() {
         try {
             new ByteArray(null, 0, 0);
-            fail("Shouldn't accept null base.");
+            Assert.fail("Shouldn't accept null base.");
         } catch (NullPointerException npe) {
         }
 
         byte[] base = new byte[0];
         try {
             new ByteArray(base, -1, 0);
-            fail("Shouldn't accept negative offset.");
+            Assert.fail("Shouldn't accept negative offset.");
         } catch (IllegalArgumentException iae) {
         }
         try {
             new ByteArray(base, 0, -1);
-            fail("Shouldn't accept negative length.");
+            Assert.fail("Shouldn't accept negative length.");
         } catch (IllegalArgumentException iae) {
         }
         try {
             new ByteArray(base, 1, 0);
-            fail("Shouldn't accept inconsistent [offset, offset+length].");
+            Assert.fail("Shouldn't accept inconsistent [offset, offset+length].");
         } catch (IllegalArgumentException iae) {
         }
     }
@@ -262,8 +258,7 @@ public class TestByteArray extends TestCase {
         ByteArray target = new ByteArray(base, 1, 1);
         doTestSetStreamBoundaryCases(target);
         doTestSetStreamEndOfStream(target, base, 1);
-        assertEquals("Should return the bytes written.", 1, target.set(0, 1,
-                stream));
+        Assert.assertEquals(1, target.set(0, 1, stream), "Should return the bytes written.");
         verifySetStream(base, 1, 0, target, 1);
 
         // Make sure all expected calls were performed.
@@ -301,8 +296,8 @@ public class TestByteArray extends TestCase {
         ByteArray target = new ByteArray(base, 0, 2);
         doTestSetStreamBoundaryCases(target);
         doTestSetStreamEndOfStream(target, base, 0);
-        assertEquals("Should return the bytes written.", 2, target.set(0, 3,
-                stream)); // maxLen should be set to 2.
+        Assert.assertEquals(2, target.set(0, 3,
+                stream), "Should return the bytes written."); // maxLen should be set to 2.
         verifySetStream(base, 0, 0, target, 2);
 
         // Make sure all expected calls were performed.
@@ -340,8 +335,8 @@ public class TestByteArray extends TestCase {
         ByteArray target = new ByteArray(base, 1, 3);
         doTestSetStreamBoundaryCases(target);
         doTestSetStreamEndOfStream(target, base, 1);
-        assertEquals("Should return the bytes written.", 1, target.set(1, 2,
-                stream)); // EOS reached b/f maxLen.
+        Assert.assertEquals(1, target.set(1, 2,
+                stream), "Should return the bytes written."); // EOS reached b/f maxLen.
         verifySetStream(base, 1, 1, target, 1);
 
         // Make sure all expected calls were performed.

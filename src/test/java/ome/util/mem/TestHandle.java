@@ -8,7 +8,6 @@ package ome.util.mem;
 
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-import junit.framework.TestCase;
 
 /**
  * Routine unit test for {@link Handle}. Verifies that we do shallow copy with
@@ -21,13 +20,12 @@ import junit.framework.TestCase;
  *         href="mailto:a.falconi@dundee.ac.uk"> a.falconi@dundee.ac.uk</a>
  * @since OME2.2
  */
-public class TestHandle extends TestCase {
+public class TestHandle {
 
     private SimpleHandle handle; // Object under test.
 
     private MockBody body; // Mock to play the Body role.
 
-    @Override
     @BeforeMethod
     protected void setUp() {
         handle = new SimpleHandle();

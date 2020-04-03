@@ -7,9 +7,9 @@ package ome.util.math.geom2D;
 
 import java.awt.Rectangle;
 
+import org.testng.Assert;
 import org.testng.annotations.Test;
 
-import junit.framework.TestCase;
 
 /**
  * Unit test for {@link RectangleArea}.
@@ -21,7 +21,7 @@ import junit.framework.TestCase;
  *         href="mailto:a.falconi@dundee.ac.uk"> a.falconi@dundee.ac.uk</a>
  * @since OME2.2
  */
-public class TestRectangleArea extends TestCase {
+public class TestRectangleArea {
 
     private static final int MAX_ITER = 100;
 
@@ -29,10 +29,10 @@ public class TestRectangleArea extends TestCase {
     public void testRectangle1() {
         RectangleArea area = new RectangleArea();
         Rectangle r = area.getBounds();
-        assertEquals("Should set x to 0.", 0, r.x, 0);
-        assertEquals("Should set y to 0.", 0, r.y, 0);
-        assertEquals("Should set w to 0.", 0, r.width, 0);
-        assertEquals("Should set h to 0.", 0, r.height, 0);
+        Assert.assertEquals(0, r.x, 0, "Should set x to 0.");
+        Assert.assertEquals(0, r.y, 0, "Should set y to 0.");
+        Assert.assertEquals(0, r.width, 0, "Should set w to 0.");
+        Assert.assertEquals(0, r.height, 0, "Should set h to 0.");
     }
 
     @Test
@@ -40,14 +40,10 @@ public class TestRectangleArea extends TestCase {
         RectangleArea area = new RectangleArea(Integer.MIN_VALUE,
                 Integer.MAX_VALUE, Integer.MIN_VALUE, Integer.MAX_VALUE);
         Rectangle r = area.getBounds();
-        assertEquals("Should set x to argument passed to constructor.",
-                Integer.MIN_VALUE, r.x, 0);
-        assertEquals("Should set y to argument passed to constructor.",
-                Integer.MAX_VALUE, r.y, 0);
-        assertEquals("Should set w to argument passed to constructor.",
-                Integer.MIN_VALUE, r.width, 0);
-        assertEquals("Should set h to argument passed to constructor.",
-                Integer.MAX_VALUE, r.height, 0);
+        Assert.assertEquals(Integer.MIN_VALUE, r.x, 0, "Should set x to argument passed to constructor.");
+        Assert.assertEquals(Integer.MAX_VALUE, r.y, 0, "Should set y to argument passed to constructor.");
+        Assert.assertEquals(Integer.MIN_VALUE, r.width, 0, "Should set w to argument passed to constructor.");
+        Assert.assertEquals(Integer.MAX_VALUE, r.height, 0, "Should set h to argument passed to constructor.");
     }
 
     @Test
@@ -56,14 +52,10 @@ public class TestRectangleArea extends TestCase {
         area.setBounds(Integer.MIN_VALUE, Integer.MAX_VALUE, Integer.MIN_VALUE,
                 Integer.MAX_VALUE);
         Rectangle r = area.getBounds();
-        assertEquals("Should set x to argument passed to setBounds() method.",
-                Integer.MIN_VALUE, r.x, 0);
-        assertEquals("Should set y to argument passed to setBounds() method.",
-                Integer.MAX_VALUE, r.y, 0);
-        assertEquals("Should set w to argument passed to setBounds() method.",
-                Integer.MIN_VALUE, r.width, 0);
-        assertEquals("Should set h to argument passed to setBounds() method.",
-                Integer.MAX_VALUE, r.height, 0);
+        Assert.assertEquals(Integer.MIN_VALUE, r.x, 0, "Should set x to argument passed to setBounds() method.");
+        Assert.assertEquals(Integer.MAX_VALUE, r.y, 0, "Should set y to argument passed to setBounds() method.");
+        Assert.assertEquals(Integer.MIN_VALUE, r.width, 0, "Should set w to argument passed to setBounds() method.");
+        Assert.assertEquals(Integer.MAX_VALUE, r.height, 0, "Should set h to argument passed to setBounds() method.");
     }
 
     @Test
@@ -76,14 +68,10 @@ public class TestRectangleArea extends TestCase {
             j = (double) i / MAX_ITER;
             area.scale(j);
             rScale = area.getBounds();
-            assertEquals("Wrong scale x [i = " + i + "].", rScale.x,
-                    (int) (r.x * j), 0);
-            assertEquals("Wrong scale y [i = " + i + "].", rScale.y,
-                    (int) (r.y * j), 0);
-            assertEquals("Wrong scale w [i = " + i + "].", rScale.width,
-                    (int) (r.width * j), 0);
-            assertEquals("Wrong scale h [i = " + i + "].", rScale.height,
-                    (int) (r.height * j), 0);
+            Assert.assertEquals(rScale.x, (int) (r.x * j), 0, "Wrong scale x [i = " + i + "].");
+            Assert.assertEquals(rScale.y, (int) (r.y * j), 0, "Wrong scale y [i = " + i + "].");
+            Assert.assertEquals(rScale.width, (int) (r.width * j), 0, "Wrong scale w [i = " + i + "].");
+            Assert.assertEquals(rScale.height, (int) (r.height * j), 0, "Wrong scale h [i = " + i + "].");
         }
     }
 
@@ -92,15 +80,14 @@ public class TestRectangleArea extends TestCase {
         RectangleArea area = new RectangleArea();
         PlanePoint[] points = area.getPoints();
         // Empty array
-        assertEquals("Wrong size of the array", 0, points.length, 0);
+        Assert.assertEquals(0, points.length, 0, "Wrong size of the array");
     }
 
     @Test
     public void testPlanePoints2() {
         RectangleArea area = new RectangleArea(0, 0, MAX_ITER, MAX_ITER);
         PlanePoint[] points = area.getPoints();
-        assertEquals("Wrong size of the array", MAX_ITER * MAX_ITER,
-                points.length, 0);
+        Assert.assertEquals(MAX_ITER * MAX_ITER, points.length, 0, "Wrong size of the array");
     }
 
     @Test
@@ -111,8 +98,8 @@ public class TestRectangleArea extends TestCase {
         int k = 0, j = 0, l = 1;
         for (int i = 0; i < points.length; i++) {
             point = points[i];
-            assertEquals("Wrong x coordinate", k, point.x1, 0);
-            assertEquals("Wrong y coordinate", j, point.x2, 0);
+            Assert.assertEquals(k, point.x1, 0, "Wrong x coordinate");
+            Assert.assertEquals(j, point.x2, 0, "Wrong y coordinate");
             if (i == l * MAX_ITER - 1) {
                 l++;
                 j++;
@@ -126,11 +113,11 @@ public class TestRectangleArea extends TestCase {
     public void testOnBoundaries() {
         RectangleArea area = new RectangleArea(0, 0, MAX_ITER, MAX_ITER);
         for (int i = 1; i < MAX_ITER; i++) {
-            assertTrue(area.onBoundaries(i, 0));
-            assertTrue(area.onBoundaries(i, MAX_ITER));
-            assertTrue(area.onBoundaries(MAX_ITER, i));
-            assertTrue(area.onBoundaries(0, i));
-            assertFalse(area.onBoundaries(i, i));
+            Assert.assertTrue(area.onBoundaries(i, 0));
+            Assert.assertTrue(area.onBoundaries(i, MAX_ITER));
+            Assert.assertTrue(area.onBoundaries(MAX_ITER, i));
+            Assert.assertTrue(area.onBoundaries(0, i));
+            Assert.assertFalse(area.onBoundaries(i, i));
         }
     }
 
