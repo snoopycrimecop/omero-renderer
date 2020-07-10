@@ -1,3 +1,9 @@
+5.5.6 (July 2020)
+------------------
+
+- Remove junit dependency. ([#13](https://github.com/ome/omero-renderer/pull/13))
+- Bump omero-romio version to 5.6.1.
+
 5.5.5 (March 2020)
 ------------------
 
