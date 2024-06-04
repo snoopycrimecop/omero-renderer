@@ -19,7 +19,7 @@ java {
 dependencies {
     testImplementation("org.testng:testng:7.5")
 
-    api("org.openmicroscopy:omero-romio:5.7.6")
+    api("org.openmicroscopy:omero-romio:5.7.7-SNAPSHOT")
 
     // Keep these from being exposed to child projects
     implementation("commons-lang:commons-lang:2.6")
